@@ -23,3 +23,5 @@ or
 bundle exec rackup --daemon
 ~~~~~
 to run it as a daemon.
+
+Only a [subset](https://golem.ph.utexas.edu/~distler/blog/itex2MMLcommands.html) of TeX commands are supported.
