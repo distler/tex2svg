@@ -91,4 +91,5 @@ class TeXSanitizer
     tensor multiscripts sqrt root operatorname mathop mathbin mathrel mathraisebox itexnum color bgcolor label]
   Itex_environments = Set.new %w[matrix pmatrix bmatrix Bmatrix vmatrix Vmatrix smallmatrix cases aligned gathered split array]
   Tikzpicture_control_sequences = Set.new %w[usetikzlibrary ar arrow coordinate draw fill filldraw node path shade shadedraw]
+  Tikzcd_control_sequences = Set.new %w[usetikzlibrary ar arrow dar drar lar rar uar tikzcdset]
 end
