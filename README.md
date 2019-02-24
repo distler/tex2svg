@@ -2,7 +2,7 @@ This program listens on port 9292 for a GET or POST request containing a TeX fra
 
 There are two request parameters:
 
-> type: [ tikzpicture | tikzcd ]\br
+>type: [ tikzpicture | tikzcd ]<br/>
 > tex:  the body of the picture (i.e., everything after the `\begin{tikzpicture}` and before the
   `\end{tikzpicture}`). If you need some non-default Tikz libraries, you can embed a `\usetikzlibrary{...}` in your tex.
 
