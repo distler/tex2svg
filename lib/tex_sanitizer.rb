@@ -90,5 +90,5 @@ class TeXSanitizer
     slash boxed frac tfrac binom tbinom over atop substack overbrace underbrace underset overset stackrel underoverset
     tensor multiscripts sqrt root operatorname mathop mathbin mathrel mathraisebox itexnum color bgcolor label]
   Itex_environments = Set.new %w[matrix pmatrix bmatrix Bmatrix vmatrix Vmatrix smallmatrix cases aligned gathered split array]
-  Tikzpicture_control_sequences = Set.new %w[usetikzlibrary ar arrow draw fill filldraw node path]
+  Tikzpicture_control_sequences = Set.new %w[usetikzlibrary ar arrow coordinate draw fill filldraw node path shade shadedraw]
 end
