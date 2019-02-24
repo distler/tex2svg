@@ -41,7 +41,7 @@ class TeX2SVG < Sinatra::Base
         if File.exist?("tmp/#{i}.svg")
           File.open("tmp/#{i}.svg") {|f| clean = f.readlines.join}
         else
-          clean = 'No SVG file was generated'
+          clean = "No SVG file was generated.\n"
         end
         %w[tex aux pdf log svg].each {|ext| File.delete("tmp/#{i}.#{ext}") if File.exist?("tmp/#{i}.#{ext}")}
         clean
