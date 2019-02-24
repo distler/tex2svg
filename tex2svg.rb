@@ -37,7 +37,7 @@ class TeX2SVG < Sinatra::Base
         end
         i = Digest::SHA2.hexdigest(rand(1000000).to_s)
         File.open("tmp/#{i}.tex", 'w') {|f| f.print(clean)}
-        system("cd tmp; #{pdflatex} #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg")
+        system("cd tmp; #{pdflatex} --interaction=batchmode #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg")
         if File.exist?("tmp/#{i}.svg")
           File.open("tmp/#{i}.svg") {|f| clean = f.readlines.join}
         else
