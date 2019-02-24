@@ -28,16 +28,11 @@ class TeXSanitizer
       else
         c = @buffer.scan(/\w*/)
         case c
-        when 'begin'
+        when 'begin', 'end'
           break unless @buffer.skip(/\{/)
           @buffer.scan(/(.*?)(\}|\^\^7d)/m)
           environment = @buffer[1]
-          @out << "\\begin\{#{environment}\}" if (@allowed_environments.include?(environment))
-        when 'end'
-          break unless @buffer.skip(/\{/)
-          @buffer.scan(/(.*?)(\}|\^\^7d)/m)
-          environment = @buffer[1]
-          @out << "\\end\{#{environment}\}" if (@allowed_environments.include?(environment))
+          @out << "\\#{c}\{#{environment}\}" if (@allowed_environments.include?(environment))
         else
           @out << "\\#{c}"  if (@allowed_control_sequences.include?(c))
         end
