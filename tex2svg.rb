@@ -46,7 +46,7 @@ class TeX2SVG < Sinatra::Base
         %w[tex aux pdf log svg].each {|ext| File.delete("tmp/#{i}.#{ext}") if File.exist?("tmp/#{i}.#{ext}")}
         clean
       else
-        "TeX fragment must be less than #{max_length} characters. Yours was #{tex.length}." if (tex && tex.length > max_length)
+        "TeX fragment must be less than #{max_length} characters. Yours was #{tex.length}.\n" if (tex && tex.length > max_length)
       end
     end
   end
