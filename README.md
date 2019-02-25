@@ -13,7 +13,7 @@ The `type` parameter is optional, and defaults to `tikzpicture`.
 ## Installation
 The program requires a working TeX installation and the [pdf2svg](http://www.cityinthesky.co.uk/opensource/pdf2svg/) commandline application (which, in turn, requires the `poppler-glib` library).
 
-* Customize the locations of `pdflatex` and pdf2svg` in the `config.yml` file. (Other configuration options include what interfaces the program binds to and what port it listens on.)
+* Customize the locations of `pdflatex` and `pdf2svg` in the `config.yml` file. (Other configuration options include what interfaces the program binds to and what port it listens on.)
 * Run the command
 ~~~~~
 bundle install --path vendor/bundle
@@ -30,7 +30,7 @@ bundle exec rackup --daemon
 ~~~~~
 to run it as a daemon.
 
-Only a [subset](https://golem.ph.utexas.edu/~distler/blog/itex2MMLcommands.html) of TeX commands are supported.
+Only a [subset](https://golem.ph.utexas.edu/~distler/blog/itex2MMLcommands.html) of TeX commands are supported, in addition to the command supported by tikzpicture/tikzcd.
 
 ## Testing
 
