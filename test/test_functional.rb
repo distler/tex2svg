@@ -39,7 +39,7 @@ class TeX2SVGTest < Test::Unit::TestCase
     overlong = 'a' * (TeX2SVG::max_length + 1)
     get '/', {:tex => overlong}
     assert last_response.ok?
-    assert_equal "TeX fragment must be less than #{TeX2SVG::max_length} characters. Yours was #{TeX2SVG::max_length+1}.", last_response.body
+    assert_equal "TeX fragment must be less than #{TeX2SVG::max_length} characters. Yours was #{TeX2SVG::max_length+1}.\n", last_response.body
   end
 
   def test_with_tikz_libraries
