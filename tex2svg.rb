@@ -9,6 +9,7 @@ require 'digest'
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
 
+  Version = '1.0'
   config_file 'config.yml'
   pdflatex = settings.pdflatex
   pdf2svg = settings.pdf2svg
@@ -18,6 +19,7 @@ class TeX2SVG < Sinatra::Base
 
   %i(get post).each do |method|
     send method, '/' do
+      response.headers['Server'] = "tex2svg #{Version}"
       tex = params['tex']
       type = params['type']
       type = 'tikzpicture' unless type && ['tikzcd', 'xypic'].include?(type)
