@@ -4,15 +4,14 @@ module TeXTemplate
 
   def TeXTemplate.tikzpicture(s)
     s, libraries = TeXTemplate.extract_libraries(s)
-    "#{TeXTemplate.boilerplate_start}\n\\usetikzlibrary{#{libraries.join(',') unless libraries.empty?}}\\begin{document}\n\\begin{tikzpicture}\n#{s}\n\\end{tikzpicture}\\end{document}"
+    Boilerplate_start + "\n\\usetikzlibrary{#{libraries.join(',') unless libraries.empty?}}\\begin{document}\n\\begin{tikzpicture}\n#{s}\n\\end{tikzpicture}\\end{document}"
   end
 
   def TeXTemplate.tikzcd(s)
-     "#{TeXTemplate.boilerplate_start}\n\\usetikzlibrary{cd}\begin{document}\n\\begin{tikzcd}\n #{s}\n\\end{tikzcd}\\end{document}"
+     Boilerplate_start + "\n\\usetikzlibrary{cd}\\begin{document}\n\\begin{tikzcd}\n #{s}\n\\end{tikzcd}\\end{document}"
   end
 
-  def TeXTemplate.boilerplate_start
-    str = <<-BS
+  Boilerplate_start = <<-BS
 \\documentclass[crop,tikz]{standalone}
 \\usepackage{amsmath}
 \\usepackage{mathrsfs}
@@ -275,9 +274,7 @@ module TeXTemplate
 \\newcommand{\\tooltip}[2]{#2}
 \\newcommand{\\toggle}[2]{#2}
 BS
-    str
-  end
-  
+
   def TeXTemplate.extract_libraries(s)
     buffer = StringScanner.new(s)
     libraries = []
@@ -294,6 +291,5 @@ BS
     end
     return [out, libraries]
   end
-
 
 end

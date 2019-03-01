@@ -29,10 +29,22 @@ class TeX2SVGTest < Test::Unit::TestCase
     assert last_response.body.include?('<g id="surface1">')
   end
 
+  def test_some_tex_with_other_type
+    get '/', {:tex => "\\fill (0,0) circle[radius=2em];", :type => 'tikzcd'}
+    assert last_response.ok?
+    assert last_response.body.include?('<g id="surface1">')
+  end
+
   def test_bad_tex
     get '/', {:tex => "\\end{matrix}", :type => 'tikzpicture'}
     assert last_response.ok?
     assert last_response.body.include?('No SVG file was generated')
+  end
+
+  def test_bad_tex_with_other_type
+    get '/', {:tex => "\\end{matrix}", :type => 'tikzcd'}
+    assert last_response.ok?
+    assert last_response.body.include?("<g id=\"surface1\">\n</g>")
   end
 
   def test_overlong_submission
