@@ -26,7 +26,7 @@ class TeXSanitizer
           @out << "\\#{next_char}"
         end
       else
-        c = @buffer.scan(/\w*/)
+        c = @buffer.scan(/[a-zA-Z]*/)
         case c
         when 'begin', 'end'
           break unless @buffer.skip(/\{/)
