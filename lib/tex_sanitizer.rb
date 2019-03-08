@@ -18,7 +18,7 @@ class TeXSanitizer
         @out << @buffer.rest
         return @out
       end
-      next_char = @buffer.scan(/(\\|\^\^5c| |,|:|;|!|\||\{|\}|\[|\])/)
+      next_char = @buffer.scan(/(\\|\^\^5c| |,|:|;|!|\||\{|\}|\[|\]|\$|&|%|#)/)
       if next_char
         if next_char == '^^5c'
           @out << "\\\\"
