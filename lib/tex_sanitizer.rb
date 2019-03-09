@@ -89,9 +89,9 @@ class TeXSanitizer
     underrightarrow underleftarrow underleftrightarrow dot ddot dddot ddddot tilde widetilde check widecheck hat widehat
     slash boxed frac tfrac binom tbinom over atop substack overbrace underbrace underset overset stackrel underoverset
     tensor multiscripts sqrt root operatorname mathop mathbin mathrel mathraisebox itexnum color bgcolor label]
-  Itex_environments = Set.new %w[matrix pmatrix bmatrix Bmatrix vmatrix Vmatrix smallmatrix cases aligned gathered split array
-    scope pgfonlayer]
+  Itex_environments = Set.new %w[matrix pmatrix bmatrix Bmatrix vmatrix Vmatrix smallmatrix cases aligned gathered split array]
+  Tikz_environments = Set.new %w[scope pgfonlayer]
   Tikzpicture_control_sequences = Set.new %w[usetikzlibrary ar arrow clip coordinate draw fill filldraw graph matrix
     node path shade shadedraw useasboundingbox]
-  Tikzcd_control_sequences = Set.new %w[usetikzlibrary ar arrow dar drar lar rar uar tikzcdset]
+  Tikzcd_control_sequences = Set.new %w[usetikzlibrary ar arrow dar drar lar rar uar tikzcdset tikztonodes tikztotarget tikztostart]
 end

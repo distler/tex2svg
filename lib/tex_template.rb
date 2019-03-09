@@ -8,7 +8,8 @@ module TeXTemplate
   end
 
   def TeXTemplate.tikzcd(s)
-     Boilerplate_start + "\n\\usetikzlibrary{cd}\\begin{document}\n\\begin{tikzcd}\n #{s}\n\\end{tikzcd}\\end{document}"
+    s, libraries = TeXTemplate.extract_libraries(s)
+    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}\\begin{document}\n\\begin{tikzcd}\n#{s}\n\\end{tikzcd}\\end{document}"
   end
 
   Boilerplate_start = <<-BS

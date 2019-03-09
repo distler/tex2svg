@@ -28,12 +28,12 @@ class TeX2SVG < Sinatra::Base
           when 'tikzpicture'
             san = TeXSanitizer.new(tex,
               TeXSanitizer::Itex_control_sequences + TeXSanitizer::Tikzpicture_control_sequences,
-              TeXSanitizer::Itex_environments)
+              TeXSanitizer::Itex_environments + TeXSanitizer::Tikz_environments)
             clean = TeXTemplate.tikzpicture(san.sanitize)
           when 'tikzcd'
             san = TeXSanitizer.new(tex,
               TeXSanitizer::Itex_control_sequences + TeXSanitizer::Tikzcd_control_sequences,
-              TeXSanitizer::Itex_environments)
+              TeXSanitizer::Itex_environments + TeXSanitizer::Tikz_environments)
             clean = TeXTemplate.tikzcd(san.sanitize)
           when 'xypic'
         end

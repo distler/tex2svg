@@ -83,5 +83,26 @@ TREND
     assert last_response.ok?
     assert last_response.body.include?('<g id="surface1">')
   end
+
+  def test_tikzcd_with_tikz_libraries
+    testcd = '\\usetikzlibrary{decorations.markings}
+    \\ar[dd, dash,dashed,
+             "\\text{something}" swap,
+             to path={
+                   -- ([xshift=-1.5cm]\\tikztostart.east)
+                   |- (\\tikztotarget) [pos=0.25] \\tikztonodes
+             }]
+             L   
+             \\ar[d, dash, dashed]  
+             \\ar[d, dash, dashed] 
+             \\\\
+             E
+             \\ar[d,dash,"<\\infty \\ \\  \\emph{separable}"] 
+             \\\\
+             F'
+    get '/', {:tex => testcd, :type => 'tikzcd'}
+    assert last_response.ok?
+    assert last_response.body.include?('<g id="surface1">')
+  end
 end
 
