@@ -9,11 +9,12 @@ require 'digest'
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
 
-  Version = '1.0.2'
+  Version = '1.0.3'
   config_file 'config.yml'
   pdflatex = settings.pdflatex
   pdf2svg = settings.pdf2svg
   max_length = settings.max_length
+  usr_tikz_commands = settings.additional_tikz_commands
   set :bind, settings.interface
   set :port, settings.port
 
@@ -22,17 +23,20 @@ class TeX2SVG < Sinatra::Base
       response.headers['Server'] = "tex2svg #{Version}"
       tex = params['tex']
       type = params['type']
+      type.strip! if type
       type = 'tikzpicture' unless type && ['tikzcd', 'xypic'].include?(type)
       if (tex && tex.length <= max_length)
+        tex.strip!
         case type
           when 'tikzpicture'
             san = TeXSanitizer.new(tex,
-              TeXSanitizer::Itex_control_sequences + TeXSanitizer::Tikzpicture_control_sequences,
+              TeXSanitizer::Itex_control_sequences + TeXSanitizer::Tikzpicture_control_sequences + usr_tikz_commands,
               TeXSanitizer::Itex_environments + TeXSanitizer::Tikz_environments)
             clean = TeXTemplate.tikzpicture(san.sanitize)
           when 'tikzcd'
             san = TeXSanitizer.new(tex,
-              TeXSanitizer::Itex_control_sequences + TeXSanitizer::Tikzcd_control_sequences,
+              TeXSanitizer::Itex_control_sequences + TeXSanitizer::Tikzpicture_control_sequences +
+              TeXSanitizer::Tikzcd_control_sequences + usr_tikz_commands,
               TeXSanitizer::Itex_environments + TeXSanitizer::Tikz_environments)
             clean = TeXTemplate.tikzcd(san.sanitize)
           when 'xypic'

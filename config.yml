@@ -11,6 +11,13 @@ max_length: 4096
 # Interface and Port to listen on ('0.0.0.0' means listen on
 # all available interfaces).
 
-interface: localhost
 # interface: 0.0.0.0
+interface: localhost
 port: 9292
+
+# Additional Tikz commands that we should allow.
+# A comma-separated list, without the leading "\" in each command, e.g.
+#
+#    additional_tikz_commands: [arrowtipkind, tikzfoldingdodecahedron]
+
+additional_tikz_commands: []

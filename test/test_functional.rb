@@ -99,7 +99,8 @@ TREND
              E
              \\ar[d,dash,"<\\infty \\ \\  \\emph{separable}"] 
              \\\\
-             F'
+             F
+'
     get '/', {:tex => testcd, :type => 'tikzcd'}
     assert last_response.ok?
     assert last_response.body.include?('<g id="surface1">')

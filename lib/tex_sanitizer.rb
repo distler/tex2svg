@@ -92,6 +92,6 @@ class TeXSanitizer
   Itex_environments = Set.new %w[matrix pmatrix bmatrix Bmatrix vmatrix Vmatrix smallmatrix cases aligned gathered split array]
   Tikz_environments = Set.new %w[scope pgfonlayer]
   Tikzpicture_control_sequences = Set.new %w[usetikzlibrary ar arrow clip coordinate draw fill filldraw graph matrix
-    node path shade shadedraw useasboundingbox]
-  Tikzcd_control_sequences = Set.new %w[usetikzlibrary ar arrow dar drar lar rar uar tikzcdset tikztonodes tikztotarget tikztostart]
+    node path shade shadedraw useasboundingbox tikztonodes tikztotarget tikztostart tikzstyle]
+  Tikzcd_control_sequences = Set.new %w[dar drar lar rar uar tikzcdset]
 end
