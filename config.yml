@@ -8,6 +8,10 @@ pdf2svg: /usr/local/bin/pdf2svg
 
 max_length: 4096
 
+# Maximum CPU time (in seconds) to process the TeX fragment into SVG
+
+max_cpu: 4
+
 # Interface and Port to listen on ('0.0.0.0' means listen on
 # all available interfaces).
 

@@ -9,11 +9,12 @@ require 'digest'
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
 
-  Version = '1.0.3'
+  Version = '1.0.4'
   config_file 'config.yml'
   pdflatex = settings.pdflatex
   pdf2svg = settings.pdf2svg
   max_length = settings.max_length
+  max_cpu = settings.max_cpu
   usr_tikz_commands = settings.additional_tikz_commands
   set :bind, settings.interface
   set :port, settings.port
@@ -43,7 +44,7 @@ class TeX2SVG < Sinatra::Base
         end
         i = Digest::SHA2.hexdigest(rand(1000000).to_s)
         File.open("tmp/#{i}.tex", 'w') {|f| f.print(clean)}
-        system("cd tmp; #{pdflatex} --interaction=batchmode #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg")
+        system("#{pdflatex} --interaction=batchmode #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg", {:rlimit_cpu=>max_cpu, :chdir=>'tmp'})
         if File.exist?("tmp/#{i}.svg")
           File.open("tmp/#{i}.svg") {|f| clean = f.readlines.join}
         else

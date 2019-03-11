@@ -4,12 +4,12 @@ module TeXTemplate
 
   def TeXTemplate.tikzpicture(s)
     s, libraries = TeXTemplate.extract_libraries(s)
-    Boilerplate_start + "\n\\usetikzlibrary{#{libraries.join(',') unless libraries.empty?}}\\begin{document}\n\\begin{tikzpicture}#{s}\n\\end{tikzpicture}\\end{document}"
+    Boilerplate_start + "\n\\usetikzlibrary{#{libraries.join(',') unless libraries.empty?}}\n\\begin{document}\n\\begin{tikzpicture}#{s}\n\\end{tikzpicture}\\end{document}"
   end
 
   def TeXTemplate.tikzcd(s)
     s, libraries = TeXTemplate.extract_libraries(s)
-    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}\\begin{document}\n\\begin{tikzcd}#{s}\n\\end{tikzcd}\\end{document}"
+    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}\n\\begin{document}\n\\begin{tikzcd}#{s}\n\\end{tikzcd}\\end{document}"
   end
 
   Boilerplate_start = <<-BS
