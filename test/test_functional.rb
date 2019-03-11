@@ -38,7 +38,13 @@ class TeX2SVGTest < Test::Unit::TestCase
   def test_bad_tex
     get '/', {:tex => "\\end{matrix}", :type => 'tikzpicture'}
     assert last_response.ok?
-    assert last_response.body.include?('No SVG file was generated')
+    assert last_response.body.include?('No SVG file was generated.')
+  end
+
+  def test_bad_tex_with_timeout
+    get '/', {:tex => "\\node[scale=1] at (0,0){$1$}\n\\node[scale=1] at (3,0){$4$};", :type => 'tikzpicture'}
+    assert last_response.ok?
+    assert last_response.body.include?('No SVG file was generated.')
   end
 
   def test_bad_tex_with_other_type
