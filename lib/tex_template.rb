@@ -281,7 +281,7 @@ BS
     libraries = []
     out = ''
     while ! buffer.eos?
-      if buffer.scan(/(.*?)\\usetikzlibraries\{/)
+      if buffer.scan(/(.*?)\\usetikzlibrary\{/)
         out << buffer[1]
       else
         out << buffer.rest
