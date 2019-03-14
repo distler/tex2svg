@@ -90,6 +90,27 @@ TREND
     assert last_response.body.include?('<g id="surface1">')
   end
 
+  def test_tikzpicture_useasboundingbox
+    testpic ='\useasboundingbox (-4,-3) rectangle (4,4.5);
+\draw[thick] (-3.46410,-2) -- (0,4) -- ( 3.46410,-2) -- (-3.46410,-2);
+\draw[thick] (0,0) circle (2);
+\draw[thick] (0,4) -- (0,-2);
+\draw[thick] (-3.46410,-2) -- ( 1.73205,1);
+\draw[thick] ( 3.46410,-2) -- (-1.73205,1);
+\filldraw (-1.73205,1) circle (3pt) node[anchor=south east, scale=1.5] {$e_1$};
+\filldraw ( 1.73205,1) circle (3pt) node[anchor=south west, scale=1.5] {$e_2$};
+\filldraw (0,-2) circle (3pt) node[anchor=north, scale=1.5] {$e_3$};
+\filldraw (0,0) circle (3pt) node[anchor=west, scale=1.5] {$e_4$};
+\filldraw (3.46410,-2) circle (3pt) node[anchor=north, scale=1.5] {$e_5$};
+\filldraw (-3.46410,-2) circle (3pt) node[anchor=north, scale=1.5] {$e_6$};
+\filldraw (0,4) circle (3pt) node[anchor=south, scale=1.5] {$e_7$};
+'
+    get '/', {:tex => testpic}
+    assert last_response.ok?
+    assert last_response.body.include?('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"' +
+      ' width="226.772pt" height="212.598pt" viewBox="0 0 226.772 212.598" version="1.1">')
+  end
+
   def test_tikzcd_with_tikz_libraries
     testcd = '\\usetikzlibrary{decorations.markings}
     \\ar[dd, dash,dashed,
