@@ -9,7 +9,7 @@ require 'digest'
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
 
-  Version = '1.0.4'
+  Version = '1.0.5'
   config_file 'config.yml'
   pdflatex = settings.pdflatex
   pdf2svg = settings.pdf2svg
