@@ -1,0 +1,26 @@
+# Full paths to the executables.
+# Customize these for your system
+
+pdflatex: /usr/bin/pdflatex
+pdf2svg: /usr/bin/pdf2svg
+
+# Maximum number of characters in the TeX fragment we will accept
+
+max_length: 4096
+
+# Maximum CPU time (in seconds) to process the TeX fragment into SVG
+
+max_cpu: 4
+
+# Interface and Port to listen on ('0.0.0.0' means listen on
+# all available interfaces).
+
+interface: 0.0.0.0
+port: 9292
+
+# Additional Tikz commands that we should allow.
+# A comma-separated list, without the leading "\" in each command, e.g.
+#
+#    additional_tikz_commands: [arrowtipkind, tikzfoldingdodecahedron]
+
+additional_tikz_commands: []
