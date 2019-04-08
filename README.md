@@ -26,7 +26,7 @@ scp tex2svg.tar.gz <server-address>:<path-to-tex2svg.tar.gz>
 ~~~~~
 followed by
 ~~~~~
-gunzip -c <path-to-tex2svg.zip> | docker load
+gunzip -c <path-to-tex2svg.tar.gz> | docker load
 docker run -d -p 9292:9292 tex2svg
 ~~~~~
 on the server.
