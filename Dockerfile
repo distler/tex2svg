@@ -15,7 +15,6 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 COPY ./config.yml.docker /usr/src/app/config.yml
-RUN chmod 777 /usr/src/app/tmp
 RUN bundle install --path vendor/bundle
 
 EXPOSE 9292
