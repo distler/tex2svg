@@ -16,7 +16,11 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 COPY ./config.yml.docker /usr/src/app/config.yml
 RUN bundle install --path vendor/bundle
+RUN useradd -m myuser && chown -R myuser:myuser /usr/src/app/tmp && \
+    chmod 711 /root && ln -s /root/texmf /home/myuser/texmf && \
+    ln -s /root/.texlive2016 /home/myuser/.texlive2016
 
 EXPOSE 9292
 
+USER myuser
 CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0"]
