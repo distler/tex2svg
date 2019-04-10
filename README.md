@@ -31,6 +31,14 @@ docker run -d -p 9292:9292 tex2svg
 ~~~~~
 on the server.
 
+## Heroku
+Heroku also support Docker deployments,
+~~~~~
+heroku apps:create [APPNAME]
+heroku stack:set container -a [APPNAME]
+git push heroku master
+~~~~~
+
 Alternatively you can install it manually, as follows.
 
 ## Installation
