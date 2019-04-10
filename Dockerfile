@@ -17,10 +17,10 @@ COPY . /usr/src/app
 COPY ./config.yml.docker /usr/src/app/config.yml
 RUN bundle install --path vendor/bundle
 RUN useradd -m myuser && chown -R myuser:myuser /usr/src/app/tmp && \
-    chmod 711 /root && ln -s /root/texmf /home/myuser/texmf && \
-    ln -s /root/.texlive2016 /home/myuser/.texlive2016
+    chmod 711 /root
 
 EXPOSE 9292
 
 USER myuser
+ENV TEXMFHOME /root/texmf
 CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0"]
