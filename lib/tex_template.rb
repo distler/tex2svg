@@ -9,11 +9,14 @@ module TeXTemplate
 
   def TeXTemplate.tikzcd(s)
     s, libraries = TeXTemplate.extract_libraries(s)
-    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}\n\\begin{document}\n\\begin{tikzcd}#{s}\n\\end{tikzcd}\\end{document}"
+    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}
+    \\tikzcdset{arrow style=math font}
+    \n\\begin{document}\n\\begin{tikzcd}#{s}\n\\end{tikzcd}\\end{document}"
   end
 
   Boilerplate_start = <<-BS
 \\documentclass[crop,tikz]{standalone}
+\\usepackage{stix2}
 \\usepackage{amsmath}
 \\usepackage{mathrsfs}
 \\usepackage{amsfonts}
@@ -110,68 +113,6 @@ module TeXTemplate
 \\def\\root#1#2{\\oldroot #1 \\of{#2}}
 \\renewcommand{\\sqrt}[2][]{\\oldroot #1 \\of{#2}}
 
-% Manually declare the txfonts symbolsC font
-\\DeclareSymbolFont{symbolsC}{U}{txsyc}{m}{n}
-\\SetSymbolFont{symbolsC}{bold}{U}{txsyc}{bx}{n}
-\\DeclareFontSubstitution{U}{txsyc}{m}{n}
-
-% Manually declare the stmaryrd font
-\\DeclareSymbolFont{stmry}{U}{stmry}{m}{n}
-\\SetSymbolFont{stmry}{bold}{U}{stmry}{b}{n}
-
-% Manually declare the MnSymbolE font
-\\DeclareFontFamily{OMX}{MnSymbolE}{}
-\\DeclareSymbolFont{mnomx}{OMX}{MnSymbolE}{m}{n}
-\\SetSymbolFont{mnomx}{bold}{OMX}{MnSymbolE}{b}{n}
-\\DeclareFontShape{OMX}{MnSymbolE}{m}{n}{
-    <-6>  MnSymbolE5
-   <6-7>  MnSymbolE6
-   <7-8>  MnSymbolE7
-   <8-9>  MnSymbolE8
-   <9-10> MnSymbolE9
-  <10-12> MnSymbolE10
-  <12->   MnSymbolE12}{}
-
-% Declare specific arrows from txfonts without loading the full package
-\\makeatletter
-\\def\\re@DeclareMathSymbol#1#2#3#4{%
-    \\let#1=\\undefined
-    \\DeclareMathSymbol{#1}{#2}{#3}{#4}}
-\\re@DeclareMathSymbol{\\neArrow}{\\mathrel}{symbolsC}{116}
-\\re@DeclareMathSymbol{\\neArr}{\\mathrel}{symbolsC}{116}
-\\re@DeclareMathSymbol{\\seArrow}{\\mathrel}{symbolsC}{117}
-\\re@DeclareMathSymbol{\\seArr}{\\mathrel}{symbolsC}{117}
-\\re@DeclareMathSymbol{\\nwArrow}{\\mathrel}{symbolsC}{118}
-\\re@DeclareMathSymbol{\\nwArr}{\\mathrel}{symbolsC}{118}
-\\re@DeclareMathSymbol{\\swArrow}{\\mathrel}{symbolsC}{119}
-\\re@DeclareMathSymbol{\\swArr}{\\mathrel}{symbolsC}{119}
-\\re@DeclareMathSymbol{\\nequiv}{\\mathrel}{symbolsC}{46}
-\\re@DeclareMathSymbol{\\Perp}{\\mathrel}{symbolsC}{121}
-\\re@DeclareMathSymbol{\\Vbar}{\\mathrel}{symbolsC}{121}
-\\re@DeclareMathSymbol{\\sslash}{\\mathrel}{stmry}{12}
-\\re@DeclareMathSymbol{\\bigsqcap}{\\mathop}{stmry}{"64}
-\\re@DeclareMathSymbol{\\biginterleave}{\\mathop}{stmry}{"6}
-\\re@DeclareMathSymbol{\\invamp}{\\mathrel}{symbolsC}{77}
-\\re@DeclareMathSymbol{\\parr}{\\mathrel}{symbolsC}{77}
-\\makeatother
-
-% \\llangle, \\rrangle, \\lmoustache and \\rmoustache from MnSymbolE
-\\makeatletter
-\\def\\Decl@Mn@Delim#1#2#3#4{%
-  \\if\\relax\\noexpand#1%
-    \\let#1\\undefined
-  \\fi
-  \\DeclareMathDelimiter{#1}{#2}{#3}{#4}{#3}{#4}}
-\\def\\Decl@Mn@Open#1#2#3{\\Decl@Mn@Delim{#1}{\\mathopen}{#2}{#3}}
-\\def\\Decl@Mn@Close#1#2#3{\\Decl@Mn@Delim{#1}{\\mathclose}{#2}{#3}}
-\\Decl@Mn@Open{\\llangle}{mnomx}{'164}
-\\Decl@Mn@Close{\\rrangle}{mnomx}{'171}
-\\Decl@Mn@Open{\\lmoustache}{mnomx}{'245}
-\\Decl@Mn@Close{\\rmoustache}{mnomx}{'244}
-\\Decl@Mn@Open{\\llbracket}{stmry}{'112}
-\\Decl@Mn@Close{\\rrbracket}{stmry}{'113}
-\\makeatother
-
 % Widecheck
 \\makeatletter
 \\DeclareRobustCommand\\widecheck[1]{{\\mathpalette\\@widecheck{#1}}}
@@ -211,6 +152,21 @@ module TeXTemplate
 \\newcommand{\\itexnum}[1]{#1}
 
 %% Renaming existing commands
+\\newcommand{\\neArrow}{\\Nearrow}
+\\newcommand{\\neArr}{\\Nearrow}
+\\newcommand{\\seArrow}{\\Searrow}
+\\newcommand{\\seArr}{\\Searrow}
+\\newcommand{\\nwArrow}{\\Nwarrow}
+\\newcommand{\\nwArr}{\\Nwarrow}
+\\newcommand{\\swArrow}{\\Swarrow}
+\\newcommand{\\swArr}{\\Swarrow}
+\\renewcommand{\\llangle}{\\lAngle}
+\\renewcommand{\\rrangle}{\\rAngle}
+\\newcommand{\\llbracket}{\\lBrack}
+\\newcommand{\\rrbracket}{\\rBrack}
+\\newcommand{\\Perp}{\\Vbar}
+\\newcommand{\\invamp}{\\upand}
+\\newcommand{\\parr}{\\upand}
 \\newcommand{\\underoverset}[3]{\\underset{#1}{\\overset{#2}{#3}}}
 \\newcommand{\\widevec}{\\overrightarrow}
 \\newcommand{\\darr}{\\downarrow}

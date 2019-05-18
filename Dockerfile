@@ -7,8 +7,10 @@ RUN apt-get update -y && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* && \
     gem update --system && gem update
 
-RUN tlmgr init-usertree && tlmgr install mnsymbol \
+RUN tlmgr init-usertree && tlmgr install stix2-type1 \
     filemod ucs currfile varwidth adjustbox standalone
+
+RUN updmap-sys
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
