@@ -9,13 +9,11 @@ module TeXTemplate
 
   def TeXTemplate.tikzcd(s)
     s, libraries = TeXTemplate.extract_libraries(s)
-    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}
-    \\tikzcdset{arrow style=math font}
-    \n\\begin{document}\n\\begin{tikzcd}#{s}\n\\end{tikzcd}\\end{document}"
+    Boilerplate_start + "\n\\usetikzlibrary{cd#{libraries.empty? ? '' : (',' + libraries.join(','))}}\n\\tikzcdset{arrow style=math font}\n\\begin{document}\n\\begin{tikzcd}#{s}\n\\end{tikzcd}\\end{document}"
   end
 
   Boilerplate_start = <<-BS
-\\documentclass[crop,tikz]{standalone}
+\\documentclass[12pt,crop,tikz]{standalone}
 \\usepackage{stix2}
 \\usepackage{amsmath}
 \\usepackage{mathrsfs}
