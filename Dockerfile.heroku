@@ -19,5 +19,4 @@ RUN useradd -m myuser && chown -R myuser:myuser /usr/src/app/tmp && \
 EXPOSE 9292
 
 USER myuser
-# ENV TEXMFHOME /root/texmf
 CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0"]
