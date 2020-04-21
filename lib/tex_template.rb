@@ -4,7 +4,7 @@ module TeXTemplate
 
   def TeXTemplate.tikzpicture(s)
     s, libraries = TeXTemplate.extract_libraries(s)
-    Boilerplate_start + "\n\\usetikzlibrary{#{libraries.push('arrows.meta','arrows.meta').uniq.join(',')}}\n#{Arrows_start}\n\\begin{document}\n\\begin{tikzpicture}#{s}\n\\end{tikzpicture}\\end{document}"
+    Boilerplate_start + "\n\\usetikzlibrary{#{libraries.push('arrows.meta').uniq.join(',')}}\n#{Arrows_start}\n\\begin{document}\n\\begin{tikzpicture}#{s}\n\\end{tikzpicture}\\end{document}"
   end
 
   def TeXTemplate.tikzcd(s)
@@ -212,10 +212,9 @@ module TeXTemplate
 \\newcommand{\\toggle}[2]{#2}
 BS
 
+# Use STIX Two arrows as the default arrow style in tikzpictures. Code to do this from
+# https://tex.stackexchange.com/questions/396851/stix-arrow-tips-in-tikz-diagrams
   Arrows_start = <<-AS
-%% Use STIX Two arrows. Code to do this from
-%% https://tex.stackexchange.com/questions/396851/stix-arrow-tips-in-tikz-diagrams
-
 %% Arrow declaration:
 \\makeatletter
 \\pgfdeclarearrow{

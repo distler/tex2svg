@@ -1,5 +1,5 @@
 build:
   docker:
-    web: Dockerfile
+    web: Dockerfile.heroku
 run:
   web: bundle exec rackup --host 0.0.0.0 -p $PORT
