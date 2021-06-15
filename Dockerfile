@@ -1,5 +1,5 @@
 FROM debian:testing
-FROM ruby:2.6
+FROM ruby:2.7
 
 RUN echo "deb http://deb.debian.org/debian testing main" > /etc/apt/sources.list
 RUN echo "deb-src http://deb.debian.org/debian testing main" >> /etc/apt/sources.list
@@ -9,12 +9,12 @@ RUN apt update -y && apt install -y \
     texlive-pictures \
     texlive-fonts-recommended xzdec \
     texlive-fonts-extra \
+    texlive-latex-extra \
     && rm -rf /var/lib/apt/lists/* && \
     gem update --system && gem update
 
 #RUN tlmgr init-usertree && tlmgr install stix2-type1 \
-RUN tlmgr init-usertree && tlmgr install \
-    filemod ucs currfile varwidth adjustbox standalone
+#    filemod ucs currfile varwidth adjustbox standalone
 
 RUN updmap-sys
 
@@ -23,7 +23,7 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 COPY ./config.yml.docker /usr/src/app/config.yml
-RUN bundle config set path 'vendor/bundle' && bundle install
+RUN bundle install
 RUN useradd -m myuser && chown -R myuser:myuser /usr/src/app/tmp && \
     chmod 711 /root
 

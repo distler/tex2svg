@@ -6,7 +6,7 @@ pdf2svg: /usr/bin/pdf2svg
 
 # Maximum number of characters in the TeX fragment we will accept
 
-max_length: 4096
+max_length: 8192
 
 # Maximum CPU time (in seconds) to process the TeX fragment into SVG
 
