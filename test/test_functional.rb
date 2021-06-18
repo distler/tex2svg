@@ -427,5 +427,16 @@ TREND
   <use xlink:href="#glyph0-5" x="3.945" y="11.961"/>
 </g>')
   end
+
+  def test_definecolor
+    testcolour = '\\definecolor{mycolor}{RGB}{255,51,76}\\draw[color=mycolor] (0.23,0.86) circle (4ex);'
+    get '/', {:tex => testcolour, :type => 'tikzpicture'}
+    assert last_response.ok?
+    assert last_response.body.include?('<g id="surface1">
+<g clip-path="url(#clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.80473;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,19.999695%,29.804993%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.092875 24.378344 C 29.092875 36.843187 18.987406 46.948656 6.518656 46.948656 C -5.946188 46.948656 -16.051656 36.843187 -16.051656 24.378344 C -16.051656 11.9135 -5.946188 1.808031 6.518656 1.808031 C 18.987406 1.808031 29.092875 11.9135 29.092875 24.378344 Z " transform="matrix(1,0,0,-1,16.454,47.351)"/>
+</g>
+</g>')
+  end
 end
 
