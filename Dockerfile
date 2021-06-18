@@ -1,21 +1,19 @@
-FROM debian:testing-slim
+FROM debian:bullseye-slim
 FROM ruby:2.7
 
-RUN echo "deb http://deb.debian.org/debian testing main" > /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian testing main" >> /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
 
 RUN apt update -y && apt install -y \
     rake rubygems pdf2svg texlive-latex-base\
     texlive-pictures \
     texlive-fonts-recommended xzdec \
-#    texlive-fonts-extra \
-#    texlive-latex-extra \
     && rm -rf /var/lib/apt/lists/* && \
     gem update --system && gem update
 
 RUN tlmgr init-usertree && tlmgr option repository \
-    ftp://tug.org/historic/systems/texlive/2020/tlnet-final && tlmgr install stix2-type1 \
-    filemod ucs currfile varwidth adjustbox standalone
+    ftp://tug.org/historic/systems/texlive/2020/tlnet-final && \
+    tlmgr install stix2-type1 filemod ucs currfile varwidth adjustbox standalone
 
 RUN updmap-sys
 
