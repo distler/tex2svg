@@ -31,7 +31,7 @@ docker run -d -p 9292:9292 tex2svg
 ~~~~~
 on the server.
 
-The size of the Docker image is 1.98 GB, which is pretty modest compared to (just!) a full texlive installation.
+The size of the Docker image is 1.09 GB, which is very modest compared to (just!) a full texlive installation.
 
 ## Heroku
 Heroku also support Docker deployments,
