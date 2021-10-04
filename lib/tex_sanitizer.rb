@@ -60,7 +60,8 @@ class TeXSanitizer
     xhookleftarrow xhookrightarrow xmapsto langle lang rangle rang llangle rrangle lbrace rbrace lceil rceil lmoustache
     rmoustache lfloor rfloor lvert rvert lVert rVert llbracket rrbracket uparrow downarrow updownarrow vert Vert left right
     big Big bigg Bigg bigl Bigl biggl Biggl bigr Bigr biggr Biggr amalg angle measuredangle sphericalangle approx approxeq
-    thickapprox ast asymp backslash because between bottom bot boxminus minusb boxplus plusb boxtimes timesb boxdot bowtie
+    thickapprox ast asymp backslash because between bottom bot boxminus minusb boxplus plusb boxtimes timesb boxdot boxslash
+    boxbslash boxast boxcircle boxbox obslash obar olessthan ogreaterthan bowtie
     bullet cap intersection cup union Cap Cup cdot circledast circledcirc clubsuit curlyvee curlywedge diamondsuit
     divideontimes dotplus heartsuit spadesuit circ bigcirc cong ncong dagger ddagger dashv Vdash vDash nvDash VDash
     nVDash vdash nvdash Vvdash Diamond diamond div equiv nequiv eqcirc neq ne Bumpeq bumpeq circeq doteq doteqdot

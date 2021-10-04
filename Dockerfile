@@ -9,7 +9,8 @@ RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.lis
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     tlmgr init-usertree && \
-    tlmgr option repository http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2020/tlnet-final && \
+    tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2020/tlnet-final && \
+    tlmgr option docfiles 0 && \
     tlmgr install stix2-type1 filemod ucs currfile varwidth adjustbox standalone && \
     updmap-sys &&\
     chmod 711 /root && \
