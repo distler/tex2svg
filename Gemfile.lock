@@ -7,7 +7,7 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     power_assert (2.0.3)
-    rack (2.2.6.3)
+    rack (2.2.6.4)
     rack-protection (3.0.5)
       rack
     rack-test (2.0.2)
