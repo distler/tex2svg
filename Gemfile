@@ -1,8 +1,9 @@
 source "https://rubygems.org"
 
-gem 'sinatra'
+gem 'sinatra', ">= 4.1.0"
 gem 'sinatra-contrib'
 gem 'rack-test'
 gem 'test-unit'
 gem 'rake'
-gem 'thin', '~> 1.8.2'
+gem 'puma'
+gem 'rackup'
