@@ -2,15 +2,15 @@ GEM
   remote: https://rubygems.org/
   specs:
     base64 (0.2.0)
-    logger (1.6.5)
+    logger (1.6.6)
     multi_json (1.15.0)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.4)
     power_assert (2.0.5)
-    puma (6.5.0)
+    puma (6.6.0)
       nio4r (~> 2.0)
-    rack (3.1.8)
+    rack (3.1.10)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
