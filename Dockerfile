@@ -27,5 +27,5 @@ RUN bundle install && \
 EXPOSE 9292
 
 USER myuser
-ENV TEXMFHOME /root/texmf
+ENV TEXMFHOME=/root/texmf
 CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0"]
