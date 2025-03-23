@@ -1,7 +1,7 @@
 # Full paths to the executables.
 # Customize these for your system
 
-pdflatex: /Library/TeX/texbin/pdflatex
+pdflatex: /Library/TeX/Distributions/Programs/texbin/pdflatex
 pdf2svg: /usr/local/bin/pdf2svg
 
 # Maximum number of characters in the TeX fragment we will accept
