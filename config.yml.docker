@@ -2,7 +2,7 @@
 # Customize these for your system
 
 pdflatex: /usr/bin/pdflatex
-pdf2svg: /usr/bin/pdf2svg
+pdf2svg: /usr/bin/pdftocairo -svg -f 1 -l 1
 
 # Maximum number of characters in the TeX fragment we will accept
 
