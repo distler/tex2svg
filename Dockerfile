@@ -1,7 +1,7 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
-RUN echo "deb http://deb.debian.org/debian bookworm main" > /etc/apt/sources.list && \
-    echo "deb-src http://deb.debian.org/debian bookworm main" >> /etc/apt/sources.list && \
+RUN echo "deb http://deb.debian.org/debian trixie main" > /etc/apt/sources.list && \
+    echo "deb-src http://deb.debian.org/debian trixie main" >> /etc/apt/sources.list && \
     apt update -y && \
     apt install -y build-essential ruby ruby-dev ruby-bundler rubygems rake poppler-utils \
       texlive-latex-base texlive-pictures xzdec && \
@@ -9,7 +9,7 @@ RUN echo "deb http://deb.debian.org/debian bookworm main" > /etc/apt/sources.lis
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     tlmgr init-usertree && \
-    tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final && \
+    tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2025/tlnet-final && \
     tlmgr option docfiles 0 && \
     tlmgr install stix2-type1 filemod ucs currfile varwidth adjustbox standalone && \
     updmap-sys &&\
