@@ -4,6 +4,9 @@ require 'set'
 class TeXSanitizer
 
   def initialize(str, allowed_control_sequences = Set.new, allowed_environments = Set.new)
+    str = str.scrub('')                              # drop invalid UTF-8 (gsub would raise on it)
+             .gsub(/[\x00-\x08\x0B-\x1F\x7F]/, '')    # control chars, except \t and \n
+             .gsub(/\^{2,}/, '^')                     # no ^^ sequences survive
     @buffer = StringScanner.new(str)
     @out = String.new
     @allowed_control_sequences = allowed_control_sequences
@@ -12,25 +15,21 @@ class TeXSanitizer
 
   def sanitize
     while ! @buffer.eos?
-      if @buffer.scan(/(.*?)(\\|\^\^5c)/)
+      if @buffer.scan(/(.*?)(\\)/m)
         @out << @buffer[1]
       else
         @out << @buffer.rest
         return @out
       end
-      next_char = @buffer.scan(/(\\|\^\^5c| |,|:|;|!|\||\{|\}|\[|\]|\$|&|%|#)/)
+      next_char = @buffer.scan(/(\\| |,|:|;|!|\||\{|\}|\[|\]|\$|&|%|#)/)
       if next_char
-        if next_char == '^^5c'
-          @out << "\\\\"
-        else
-          @out << "\\#{next_char}"
-        end
+        @out << "\\#{next_char}"
       else
         c = @buffer.scan(/[a-zA-Z]*/)
         case c
         when 'begin', 'end'
           break unless @buffer.skip(/\{/)
-          @buffer.scan(/(.*?)(\}|\^\^7d)/m)
+          @buffer.scan(/(.*?)(\})/m)
           environment = @buffer[1]
           @out << "\\#{c}\{#{environment}\}" if (@allowed_environments.include?(environment))
         else
