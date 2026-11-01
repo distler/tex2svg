@@ -210,6 +210,20 @@ module TeXTemplate
 \\newcommand{\\statusline}[2]{#2}
 \\newcommand{\\tooltip}[2]{#2}
 \\newcommand{\\toggle}[2]{#2}
+
+% Security: neutralize PGF's plot-to-file machinery. Even with openin_any=p /
+% openout_any=p, an allowed \\draw ... plot function {...} writes a gnuplot
+% script into the working directory (with a caller-controlled name via the
+% prefix/id options), and plot file {...} reads data files from it. Redefining
+% these internals to no-ops closes both without affecting the ordinary
+% plot coordinates {...} and plot (\\x,...) forms.
+\\makeatletter
+\\AtBeginDocument{%
+  \\@ifundefined{pgfplotgnuplot}{}{\\renewcommand\\pgfplotgnuplot[2][]{}}%
+  \\@ifundefined{pgfplotxyfile}{}{\\def\\pgfplotxyfile#1{}}%
+  \\@ifundefined{pgfplotxyzfile}{}{\\def\\pgfplotxyzfile#1{}}%
+}
+\\makeatother
 BS
 
 # Use STIX Two arrows as the default arrow style in tikzpictures. Code to do this from
@@ -383,13 +397,13 @@ AS
     libraries = []
     out = ''
     while ! buffer.eos?
-      if buffer.scan(/(.*?)\\usetikzlibrary\{/)
+      if buffer.scan(/(.*?)\\usetikzlibrary\{/m)
         out << buffer[1]
       else
         out << buffer.rest
         return [out, libraries]
       end
-      buffer.scan(/(.*?)\}/)
+      break unless buffer.scan(/(.*?)\}/m)
       libraries.concat buffer[1].split(/\s*,\s*/)
     end
     return [out, libraries]

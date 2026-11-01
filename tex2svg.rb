@@ -4,7 +4,7 @@ require 'sinatra'
 require 'tex_sanitizer'
 require 'tex_template'
 require "sinatra/config_file"
-require 'digest'
+require 'securerandom'
 
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
@@ -42,7 +42,7 @@ class TeX2SVG < Sinatra::Base
             clean = TeXTemplate.tikzcd(san.sanitize)
           when 'xypic'
         end
-        i = Digest::SHA2.hexdigest(rand(1000000).to_s)
+        i = SecureRandom.hex(16)
         File.open("tmp/#{i}.tex", 'w') {|f| f.print(clean)}
         system("#{pdflatex} --no-shell-escape -cnf-line=openin_any=p -cnf-line=openout_any=p --interaction=batchmode #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg", {:rlimit_cpu=>max_cpu, :chdir=>'tmp'})
         if File.exist?("tmp/#{i}.svg")
