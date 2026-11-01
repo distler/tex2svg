@@ -12,6 +12,10 @@ max_length: 12228
 
 max_cpu: 4
 
+# Maximum size (in bytes) of any file the pdflatex/pdf2svg processes may write.
+
+max_fsize: 52428800
+
 # Interface and Port to listen on ('0.0.0.0' means listen on
 # all available interfaces).
 

@@ -395,7 +395,7 @@ AS
   def TeXTemplate.extract_libraries(s)
     buffer = StringScanner.new(s)
     libraries = []
-    out = ''
+    out = String.new
     while ! buffer.eos?
       if buffer.scan(/(.*?)\\usetikzlibrary\{/m)
         out << buffer[1]

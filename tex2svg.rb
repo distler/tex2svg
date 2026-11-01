@@ -9,12 +9,13 @@ require 'securerandom'
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
 
-  Version = '1.0.15'
+  Version = '1.0.16'
   config_file 'config.yml'
   pdflatex = settings.pdflatex
   pdf2svg = settings.pdf2svg
   max_length = settings.max_length
   max_cpu = settings.max_cpu
+  max_fsize = settings.max_fsize
   usr_tikz_commands = settings.additional_tikz_commands
   set :bind, settings.interface
   set :port, settings.port
@@ -44,7 +45,8 @@ class TeX2SVG < Sinatra::Base
         end
         i = SecureRandom.hex(16)
         File.open("tmp/#{i}.tex", 'w') {|f| f.print(clean)}
-        system("#{pdflatex} --no-shell-escape -cnf-line=openin_any=p -cnf-line=openout_any=p --interaction=batchmode #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg", {:rlimit_cpu=>max_cpu, :chdir=>'tmp'})
+        system("#{pdflatex} --no-shell-escape -cnf-line=openin_any=p -cnf-line=openout_any=p --interaction=batchmode" +
+          " #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg", {:rlimit_cpu => max_cpu, :rlimit_fsize => max_fsize, :rlimit_core => 0, :chdir => 'tmp'})
         if File.exist?("tmp/#{i}.svg")
           File.open("tmp/#{i}.svg") {|f| clean = f.readlines.join}
         else
