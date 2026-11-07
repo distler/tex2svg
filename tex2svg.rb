@@ -5,6 +5,7 @@ require 'tex_sanitizer'
 require 'tex_template'
 require "sinatra/config_file"
 require 'securerandom'
+require 'sandbox'
 
 class TeX2SVG < Sinatra::Base
   register Sinatra::ConfigFile
@@ -19,6 +20,14 @@ class TeX2SVG < Sinatra::Base
   usr_tikz_commands = settings.additional_tikz_commands
   set :bind, settings.interface
   set :port, settings.port
+
+  # OS-level filesystem confinement for the typesetting pipeline (see
+  # lib/sandbox.rb). Read-only TeX/library paths are resolved once at start-up;
+  # the job directory is the only writable location. Set `sandbox: false` in
+  # config.yml to force it off.
+  sandbox_enabled = settings.respond_to?(:sandbox) ? settings.sandbox : true
+  sandbox_ro = Sandbox.ro_paths(pdflatex: pdflatex, pdf2svg: pdf2svg)
+  sandbox_rw = File.expand_path('tmp')
 
   %i(get post).each do |method|
     send method, '/' do
@@ -45,8 +54,9 @@ class TeX2SVG < Sinatra::Base
         end
         i = SecureRandom.hex(16)
         File.open("tmp/#{i}.tex", 'w') {|f| f.print(clean)}
-        system("#{pdflatex} --no-shell-escape -cnf-line=openin_any=p -cnf-line=openout_any=p --interaction=batchmode" +
-          " #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg", {:rlimit_cpu => max_cpu, :rlimit_fsize => max_fsize, :rlimit_core => 0, :chdir => 'tmp'})
+        cmd = "#{pdflatex} --no-shell-escape -cnf-line=openin_any=p -cnf-line=openout_any=p --interaction=batchmode #{i}.tex; #{pdf2svg} #{i}.pdf #{i}.svg"
+        system(*Sandbox.wrap(cmd, ro: sandbox_ro, rw: sandbox_rw, enabled: sandbox_enabled),
+               {:rlimit_cpu=>max_cpu, :rlimit_fsize => max_fsize, :chdir=>'tmp'})
         if File.exist?("tmp/#{i}.svg")
           File.open("tmp/#{i}.svg") {|f| clean = f.readlines.join}
         else
