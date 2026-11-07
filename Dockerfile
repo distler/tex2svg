@@ -11,7 +11,7 @@ RUN echo "deb http://deb.debian.org/debian trixie main" > /etc/apt/sources.list 
     tlmgr init-usertree && \
     tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2025/tlnet-final && \
     tlmgr option docfiles 0 && \
-    tlmgr install stix2-type1 filemod ucs currfile varwidth adjustbox standalone && \
+    tlmgr install stix2-type1 filemod ucs currfile varwidth adjustbox standalone rsfs amsfonts && \
     updmap-sys &&\
     chmod 711 /root && \
     useradd -m myuser && \
