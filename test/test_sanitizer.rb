@@ -7,16 +7,16 @@ class TestSanitizer < Test::Unit::TestCase
 
   def test_no_allowed
     [
-      ["foo \\, ^^5cbar baz", "foo \\, ^5cbar baz"],
-      ["foo \\, ^^5cbar", "foo \\, ^5cbar"],
-      ["foo ^^5c, ^^5cbar", "foo ^5c, ^5cbar"],
-      ["foo ^^5c, ^^5c* \\2 ^^5cbar2", "foo ^5c, ^5c* 2 ^5cbar2"],
-      ["\\, ^^5cbar baz", "\\, ^5cbar baz"],
-      ["\\, ^^5cbar \\$ \\& \\% \\# baz", "\\, ^5cbar \\$ \\& \\% \\# baz"],
+      ["foo \\, ^^5cbar baz ^5cbop", "foo \\,  baz "],
+      ["foo \\, ^^5Cbar", "foo \\, "],
+      ["foo ^^5c, ^^5cbar", "foo \\, "],
+      ["foo ^^5c, ^^5c* \\2 ^^5cbar2", "foo \\, * 2 2"],
+      ["\\, ^^5cbar baz", "\\,  baz"],
+      ["\\, ^^5cbar \\$ \\& \\% \\# baz", "\\,  \\$ \\& \\% \\# baz"],
       ["foo \\, \\bar baz", "foo \\,  baz"],
       ["foo \\, \\bar \\begin{bar}baz\\end{bar}", "foo \\,  baz"],
       ["foo \\, \\bar \\begin{bar\n}baz\\end{bar\n}", "foo \\,  baz"],
-      ["foo \\, \\bar \\begin{bar}baz^^5cend{bar}", "foo \\,  baz^5cend{bar}"],
+      ["foo \\, \\bar \\begin{bar}baz^^5cend{bar}", "foo \\,  baz"],
     ].each do |raw, cooked|
       s = TeXSanitizer.new(raw)
       assert_equal(cooked, s.sanitize)
@@ -25,16 +25,16 @@ class TestSanitizer < Test::Unit::TestCase
 
   def test_bar_allowed
     [
-      ["foo \\, ^^5cbar baz", "foo \\, ^5cbar baz"],
-      ["foo \\, ^^5cbar", "foo \\, ^5cbar"],
-      ["foo ^^5c, ^^5cbar", "foo ^5c, ^5cbar"],
-      ["foo ^^5c, ^^5c* \\2 ^^5cbar2", "foo ^5c, ^5c* 2 ^5cbar2"],
-      ["\\, ^^5cbar baz", "\\, ^5cbar baz"],
-      ["\\, ^^5cbar \\$ \\& \\% \\# baz", "\\, ^5cbar \\$ \\& \\% \\# baz"],
+      ["foo \\, ^^5cbar baz", "foo \\, \\bar baz"],
+      ["foo \\, ^^5cbar", "foo \\, \\bar"],
+      ["foo ^^5c, ^^5cbar", "foo \\, \\bar"],
+      ["foo ^^5c, ^^5c* \\2 ^^5cbar2", "foo \\, * 2 \\bar2"],
+      ["\\, ^^5cbar baz", "\\, \\bar baz"],
+      ["\\, ^^5cbar \\$ \\& \\% \\# baz", "\\, \\bar \\$ \\& \\% \\# baz"],
       ["foo \\, \\bar baz", "foo \\, \\bar baz"],
       ["foo \\, \\bar \\begin{bar}baz\\end{bar}", "foo \\, \\bar baz"],
       ["foo \\, \\bar \\begin{bar\n}baz\\end{bar\n}", "foo \\, \\bar baz"],
-      ["foo \\, \\bar \\begin{bar}baz^^5cend{bar}", "foo \\, \\bar baz^5cend{bar}"],
+      ["foo \\, \\bar \\begin{bar}baz^^5cend{bar}", "foo \\, \\bar baz"],
     ].each do |raw, cooked|
       s = TeXSanitizer.new(raw, Set['bar'])
       assert_equal(cooked, s.sanitize)
@@ -43,16 +43,16 @@ class TestSanitizer < Test::Unit::TestCase
 
   def test_bar_environment_allowed
     [
-      ["foo \\, ^^5cbar baz", "foo \\, ^5cbar baz"],
-      ["foo \\, ^^5cbar", "foo \\, ^5cbar"],
-      ["foo ^^5c, ^^5cbar", "foo ^5c, ^5cbar"],
-      ["foo ^^5c, ^^5c* \\2 ^^5cbar2", "foo ^5c, ^5c* 2 ^5cbar2"],
-      ["\\, ^^5cbar baz", "\\, ^5cbar baz"],
-      ["\\, ^^5cbar \\$ \\& \\% \\# baz", "\\, ^5cbar \\$ \\& \\% \\# baz"],
+      ["foo \\, ^^5cbar baz", "foo \\,  baz"],
+      ["foo \\, ^^5cbar", "foo \\, "],
+      ["foo ^^5c, ^^5cbar", "foo \\, "],
+      ["foo ^^5c, ^^5c* \\2 ^^5cbar2", "foo \\, * 2 2"],
+      ["\\, ^^5cbar baz", "\\,  baz"],
+      ["\\, ^^5cbar \\$ \\& \\% \\# baz", "\\,  \\$ \\& \\% \\# baz"],
       ["foo \\, \\bar baz", "foo \\,  baz"],
       ["foo \\, \\bar \\begin{bar}baz\\end{bar}", "foo \\,  \\begin{bar}baz\\end{bar}"],
       ["foo \\, \\bar \\begin{bar\n}baz\\end{bar\n}", "foo \\,  baz"],
-      ["foo \\, \\bar \\begin{bar}baz^^5cend{bar}", "foo \\,  \\begin{bar}baz^5cend{bar}"],
+      ["foo \\, \\bar \\begin{bar}baz^^5cend{bar}", "foo \\,  \\begin{bar}baz\\end{bar}"],
     ].each do |raw, cooked|
       s = TeXSanitizer.new(raw, Set.new, Set['bar'])
       assert_equal(cooked, s.sanitize)
@@ -64,7 +64,7 @@ class TestSanitizer < Test::Unit::TestCase
       # A newline before a disallowed sequence must not bypass sanitization.
       ["x\n\\input baz", "x\n baz"],
       # Runs of carets collapse to a single caret.
-      ["a^^^^5c", "a^5c"],
+      ["a^^^^5c", "a"],
       # Control characters are removed.
       ["a\x00b", "ab"],
       # ^^ followed by 0x1C would otherwise be decoded to a backslash by TeX;

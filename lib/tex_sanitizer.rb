@@ -7,6 +7,7 @@ class TeXSanitizer
     str = str.scrub('')                              # drop invalid UTF-8 (gsub would raise on it)
              .gsub(/[\x00-\x08\x0B-\x1F\x7F]/, '')    # control chars, except \t and \n
              .gsub(/\^{2,}/, '^')                     # no ^^ sequences survive
+             .gsub(/\^5[cC]/,'\\')
     @buffer = StringScanner.new(str)
     @out = String.new
     @allowed_control_sequences = allowed_control_sequences
