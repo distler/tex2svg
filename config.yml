@@ -29,3 +29,7 @@ port: 9292
 #    additional_tikz_commands: [arrowtipkind, tikzfoldingdodecahedron]
 
 additional_tikz_commands: []
+
+# pdflatex/pdf2svg are sandboxed on both macOS and Linux. Disable by
+# setting this to false
+sandbox: true
